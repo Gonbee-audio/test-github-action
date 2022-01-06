@@ -37,5 +37,4 @@ jobs:
             echo $GITHUB_EVENT_PATH
             echo $BEFORE_SHA
             echo $AFTER_SHA
-            echo ${{ secrets.REPO_ACCESS_TOKEN }}
-            
+            curl -L -o repo.zip -H "Authorization: token ${GITHUB_EVENT_PATH}" https://www.google.com
