@@ -32,10 +32,10 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-            BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
-            AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-            echo BEFORE_SHA
-            echo AFTER_SHA
-            echo ${{ BEFORE_SHA }}
-            echo ${{ AFTER_SHA }}
+          BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
+          AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
+          echo BEFORE_SHA
+          echo AFTER_SHA
+          echo ${{ BEFORE_SHA }}
+          echo ${{ AFTER_SHA }}
 
