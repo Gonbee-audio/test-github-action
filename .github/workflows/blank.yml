@@ -37,4 +37,5 @@ jobs:
             echo $GITHUB_EVENT_PATH
             echo $BEFORE_SHA
             echo $AFTER_SHA
+            echo ${{ secrets.REPO_ACCESS_TOKEN }}
             
