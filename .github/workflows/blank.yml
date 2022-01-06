@@ -32,11 +32,27 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-            BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
-            AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-            echo $GITHUB_EVENT_PATH
-            echo $BEFORE_SHA
-            echo $AFTER_SHA
-            curl -L -o repo.zip -H "Authorization: token ${GITHUB_EVENT_PATH}" https://www.google.com
-            git diff ${BEFORE_SHA} -- \
-            ${AFTER_SHA}
+          BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
+          AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
+          REF_URL=$(jq -r '.compare' $GITHUB_EVENT_PATH)
+          REF_BRANCH=$(jq -r '.ref' $GITHUB_EVENT_PATH)
+          curl -L -o repo.zip -H "Authorization: token ${REPO_ACCESS_TOKEN}" \
+          https://api.github.com/repos/ORGANIZATION_NAME/SRE_REPO_NAME/zipball/master
+          unzip repo.zip -d SRE_REPO_NAME
+          git diff ${BEFORE_SHA} \
+          -- ${MIGRATION_DIR} \
+          | grep 'ALTER TABLE' \
+          | while read statement ; do \
+              echo $statement
+              grep table: SRE_REPO_NAME/TARGET_TABLE_NAME_LIST.yaml \
+              | sed -e "s/ *//g" -e "s/table:\([a-z_]*\)\s*/\1/" \
+              | while read table_name ; do \
+                  if [[ "$statement" =~ "\`$table_name\`" ]]; then
+                   report="<@SLACK_USER_ID> ${REF_BRANCH}で${table_name}テーブルに変更がかかりました\n\n内容: $(echo ${statement} | tr \' \")\n差分: ${REF_URL}"
+                   echo $report
+                   echo "{'attachments':[{'fallback':'${report}','color':'#ffd700','fields':[{'title':'table変更通知','value':'${report}'}]}]}" \
+                   | curl -k --verbose -X POST -H 'Content-Type:application/json;' \
+                   --data @- ${SLACK_WEBHOOK_URL_TO_SRE}
+                  fi
+              done
+          done
