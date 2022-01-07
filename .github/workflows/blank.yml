@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0 
       - name: js diff check
         run: |
-          echo github.event
+          echo ${ github.event }
           echo $GITHUB_HEAD_REF
-          git --no-pager diff --name-only origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} -- "./oui/src/plugin/*" \
+          git --no-pager diff --name-only origin..origin/${GITHUB_HEAD_REF} -- "./oui/src/plugin/*" \
               > js-files.txt || echo 'js not exist'
