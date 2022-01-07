@@ -26,8 +26,8 @@ jobs:
         run: |
             BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
             AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
+            git log
             echo $GITHUB_EVENT_PATH
             echo $BEFORE_SHA
             echo $AFTER_SHA
-            curl -L -o repo.zip -H "Authorization: token ${GITHUB_EVENT_PATH}" https://www.google.com
             git diff $BEFORE_SHA..$AFTER_SHA
