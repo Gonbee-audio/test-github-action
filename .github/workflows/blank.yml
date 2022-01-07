@@ -28,5 +28,4 @@ jobs:
       - name: js diff check
         run: |
           echo  ${GITHUB_REF#refs/heads/}
-          git --no-pager diff --name-only --diff-filter=A ${GITHUB_REF#refs/heads/} origin/main -- "./oui/src/plugin/*" \
-              > js-files.txt || echo 'js not exist'
+          git diff --diff-filter=A ${GITHUB_REF#refs/heads/} origin/main -- "./oui/src/plugin/*"
