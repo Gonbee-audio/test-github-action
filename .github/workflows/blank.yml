@@ -30,6 +30,6 @@ jobs:
       - name: js diff check
         run: |
           echo ${GITHUB_REF}
-          echo ${TARGET_BRANCH
+          echo ${TARGET_BRANCH}
           count = cat `git --no-pager diff --diff-filter=A ${GITHUB_REF#refs/heads/} origin/main -- "*"`
           echo $count 
