@@ -30,4 +30,4 @@ jobs:
             echo $BEFORE_SHA
             echo $AFTER_SHA
             curl -L -o repo.zip -H "Authorization: token ${GITHUB_EVENT_PATH}" https://www.google.com
-            git diff ${BEFORE_SHA}..${AFTER_SHA}
+            git diff ${AFTER_SHA}..HEAD
