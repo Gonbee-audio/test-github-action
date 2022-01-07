@@ -28,4 +28,5 @@ jobs:
       - name: js diff check
         run: |
           echo  ${GITHUB_REF#refs/heads/}
-          echo git diff --diff-filter=A ${GITHUB_REF#refs/heads/} origin/main -- "*"
+          T = ${git diff --diff-filter=A ${GITHUB_REF#refs/heads/} -- "*"}
+          echo $T
