@@ -27,6 +27,6 @@ jobs:
           fetch-depth: 0 
       - name: js diff check
         run: |
-          echo  ${GITHUB_REF#refs/heads/}
-          T = ${git diff --diff-filter=A ${GITHUB_REF#refs/heads/} -- "*"}
-          echo $T
+          git fetch ${GITHUB_REF#refs/heads/}
+          count=`git diff --diff-filter=A ${GITHUB_REF#refs/heads/} origin/main -- "*"`
+          echo $count
