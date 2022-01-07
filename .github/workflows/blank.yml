@@ -26,5 +26,8 @@ jobs:
         with:
           fetch-depth: 0 
       - name: js diff check
-        run:  git --no-pager diff --name-only --diff-filter=AMCR origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} -- "./oui/src/plugin/*" \
-              > js-files.txt || echo 'js not exis'
+        run: |
+          echo ${GITHUB_BASE_REF}
+          echo ${GITHUB_HEAD_REF}
+          git --no-pager diff --name-only origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} -- "./oui/src/plugin/*" \
+              > js-files.txt || echo 'js not exist'
