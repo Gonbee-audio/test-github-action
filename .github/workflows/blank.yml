@@ -29,4 +29,5 @@ jobs:
         run: |
           git fetch origin ${GITHUB_REF#refs/heads/}
           count = `git diff origin/${TARGET_BRANCH} HEAD`
-          echo $count 
+          C = cat $count
+          echo $C
