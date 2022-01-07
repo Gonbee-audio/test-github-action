@@ -26,10 +26,10 @@ jobs:
         with:
           fetch-depth: 0 
         env:
-          TARGET_BRANCH: ${{ github.base_ref }}
+          TARGET_BRANCH: ${{ github }}
       - name: js diff check
         run: |
-          echo ${GITHUB_REF}
           echo ${TARGET_BRANCH}
+          echo ${GITHUB_REF#refs/heads/}
           count = cat `git --no-pager diff --diff-filter=A ${GITHUB_REF#refs/heads/} origin/main -- "*"`
           echo $count 
