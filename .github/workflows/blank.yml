@@ -22,12 +22,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Run a multi-line script
-        run: |
-            BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
-            AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-            git log
-            echo $GITHUB_EVENT_PATH
-            echo $BEFORE_SHA
-            echo $AFTER_SHA
-            git diff $BEFORE_SHA..$AFTER_SHA
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 
+      - name: js diff check
+        run:  git --no-pager diff --name-only --diff-filter=AMCR origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} -- "*.js" \
+              > js-files.txt || echo 'js not exis
