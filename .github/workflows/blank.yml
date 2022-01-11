@@ -30,4 +30,5 @@ jobs:
           echo $GITHUB_REF#refs/heads/
           echo $github.ref
           count = `git --no-pager diff --diff-filter=A ${GITHUB_REF#refs/heads/} origin/main -- "*"`
-          echo cat $count 
+          cat $count 
+          echo $count 
