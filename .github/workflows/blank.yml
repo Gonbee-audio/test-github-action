@@ -29,6 +29,6 @@ jobs:
         run: |
           echo $GITHUB_REF#refs/heads/
           echo $github.ref
-          git diff --exit-code ${GITHUB_REF#refs/heads/}...origin/${GITHUB_REF#refs/heads/} --relative=*
+          conut = $(git diff --exit-code ${GITHUB_REF#refs/heads/}...origin/${GITHUB_REF#refs/heads/} --relative=*)
           cat $count 
           echo $count 
