@@ -11,7 +11,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
@@ -19,20 +18,16 @@ jobs:
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    inputs:
-      subdir:
-        required: true
-    outputs:
-      diff-count:
-        value: ${{ steps.diff.outputs.diff-count }}
-    runs:
-      using: composite
-      steps:
-          run: |
-            BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
-            AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-            cat $GITHUB_EVENT_PATH
-            git fetch origin ${TARGET_BRANCH}
-            git diff ${BEFORE_SHA} \
-            -- ${AFTER_SHA} \
-            | grep 'function' 
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 
+        env:
+          TARGET_BRANCH: ${{ github.base_ref }}
+      - name: js diff check
+          BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
+          AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
+          cat $GITHUB_EVENT_PATH
+          git fetch origin ${TARGET_BRANCH}
+          git diff ${BEFORE_SHA} \
+          -- ${AFTER_SHA} | grep 'function' 
