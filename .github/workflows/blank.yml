@@ -27,8 +27,6 @@ jobs:
           fetch-depth: 0 
       - name: js diff check
         run: |
-          echo $GITHUB_REF#refs/heads/
-          echo $github.ref
           conut=`git diff --exit-code ${GITHUB_REF#refs/heads/}...origin/${GITHUB_REF#refs/heads/} --relative=*`
           echo "::set-output name=diff-count::$(echo $count)"
 
