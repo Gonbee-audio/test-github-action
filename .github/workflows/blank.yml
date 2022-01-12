@@ -25,11 +25,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0 
-        env:
-          TARGET_BRANCH: ${{ github.base_ref }}
       - name: js diff check
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-          git fetch origin ${TARGET_BRANCH}
-          git diff ${BEFORE_SHA}..${AFTER_SHA} | grep 'function' oui/src/lib/*
+          git diff git --name-only ${BEFORE_SHA}..${AFTER_SHA} | grep 'function' oui/src/lib/* 
