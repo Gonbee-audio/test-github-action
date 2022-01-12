@@ -29,6 +29,5 @@ jobs:
         run: |
           echo $GITHUB_REF#refs/heads/
           echo $github.ref
-          git diff --exit-code origin/main...${GITHUB_SHA} --relative=*
           cat $count 
           echo $count 
