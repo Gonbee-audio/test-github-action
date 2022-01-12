@@ -33,5 +33,4 @@ jobs:
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
           cat $GITHUB_EVENT_PATH
           git fetch origin ${TARGET_BRANCH}
-          git diff ${BEFORE_SHA} \
-          -- ${AFTER_SHA} | grep 'function' 
+          git diff ${BEFORE_SHA}..${AFTER_SHA} | grep 'function' 
