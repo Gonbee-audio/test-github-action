@@ -25,8 +25,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0 
+        env:
+          TARGET_BRANCH: ${{ github.base_ref }}
       - name: js diff check
         run: |
-          conut=`git diff --exit-code ${GITHUB_REF#refs/heads/}...origin/${GITHUB_REF#refs/heads/} --relative=*`
+          git fetch origin ${TARGET_BRANCH}
+          count=`git diff origin/${TARGET_BRANCH} HEAD --name-only --relative=${{ inputs.subdir }} | wc -l`
           echo "::set-output name=diff-count::$(echo $count)"
 
