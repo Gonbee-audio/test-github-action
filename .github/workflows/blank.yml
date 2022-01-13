@@ -29,4 +29,4 @@ jobs:
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-          git diff --name-only --diff-filter=ADCRM ${BEFORE_SHA}..HEAD | grep 'oui/src/lib/' oui/src/lib/* 
+          git diff --name-only --diff-filter=ADCRM ${BEFORE_SHA}..HEAD| grep 'oui/src/lib' oui/src/lib/* 
