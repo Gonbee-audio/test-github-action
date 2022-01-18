@@ -29,5 +29,5 @@ jobs:
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-          const = git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/*
-          echo $const
+          git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/* | while read statement\
+          echo $statement
