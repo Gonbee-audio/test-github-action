@@ -31,5 +31,5 @@ jobs:
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
           git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/*  
           | while read statement ; do
-            echo $statement
-          done
+              echo "${statement}"
+            done
