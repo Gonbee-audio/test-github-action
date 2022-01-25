@@ -31,6 +31,6 @@ jobs:
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
           git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA} \
           | while read statement ; do \
-            report= "今回の修正で${statement]のファイルに変更がありました。"
+            report= "今回の修正で${statement}のファイルに変更がありました。"
             echo $report
           done
