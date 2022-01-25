@@ -32,4 +32,4 @@ jobs:
           git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA}
           | while read statement ; do \
             echo "${statement}"
-            done
+          done
