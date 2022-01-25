@@ -27,9 +27,9 @@ jobs:
           fetch-depth: 0 
       - name: js diff check
         run: |
-          echo 'windows
-          mac
-          linux' | while read line
-          do
-            echo "read line:$line"
-          done
+          BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
+          AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
+          git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA}
+          | while read statement ; do
+              echo "${statement}"
+            done
