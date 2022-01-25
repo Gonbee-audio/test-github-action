@@ -29,5 +29,6 @@ jobs:
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-          report=`git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA}`
+          diff=`git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA}`
+          report=`今回の修正で${diff}が変更されました。`
           echo $report
