@@ -31,5 +31,11 @@ jobs:
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
           git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA}
           | while read statement ; do \
-            echo "${statement}"
+            echo $statement
+            grep table: SRE_REPO_NAME/TARGET_TABLE_NAME_LIST.yaml \
+            | sed -e "s/ *//g" -e "s/table:\([a-z_]*\)\s*/\1/" \
+            | while read table_name ; do \
+              if [[ "$statement" =~ "\`$table_name\`" ]]; then
+              fi
+             done
           done
