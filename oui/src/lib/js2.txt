@@ -1,15 +1,1 @@
-function
-aa
-function
-aa
-function
-aa
-function
-aa
-function
-aa
-function
-aa
-function
-aa
-functionfunction
+testjs2
