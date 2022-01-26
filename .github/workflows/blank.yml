@@ -29,8 +29,9 @@ jobs:
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-          diff=`git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
-          if [ -n "$diff" ]; then
-            report="今回の修正で\n${diff}\nが変更されました。"
+          add=`git diff --name-only --diff-filter=M ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
+          del=`git diff --name-only --diff-filter=D ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
+          if [ -n "$add" ] || [ -n "$del" ]; then
+            report="今回の修正で\n${add}\nが追加され、\n${del}\nが削除されました。"
             echo -e $report | tr ' ' '\n'
           fi
