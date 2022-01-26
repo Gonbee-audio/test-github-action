@@ -31,4 +31,4 @@ jobs:
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
           diff=`git diff --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA}`
           report="今回の修正で\n${diff}\nが変更されました。"
-          echo $report | tr ' ' '\n'
+          echo -e $report | tr ' ' '\n'
