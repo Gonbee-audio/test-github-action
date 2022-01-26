@@ -7,8 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
-    paths:
-      - 'oui/src/lib/**'
   pull_request:
     branches: [ main ]
 
@@ -31,6 +29,6 @@ jobs:
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-          diff=`git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA}`
+          diff=`git diff --name-only --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**'`
           report="今回の修正で\n${diff}\nが変更されました。"
           echo -e $report | tr ' ' '\n'
