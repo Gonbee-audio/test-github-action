@@ -32,6 +32,10 @@ jobs:
           add=`git diff --name-only --diff-filter=M ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
           del=`git diff --name-only --diff-filter=D ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
           if [ -n "$add" ] || [ -n "$del" ]; then
-            report="今回の修正で\n${add}\nが追加され、\n${del}\nが削除されました。"
-            echo -e $report | tr ' ' '\n'
+            report="今回の修正で
+            ${add}
+            が追加され、
+            ${del}
+            が削除されました。"
+            echo $report | tr ' ' '\n'
           fi
