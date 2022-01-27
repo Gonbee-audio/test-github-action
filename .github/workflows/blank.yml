@@ -29,15 +29,10 @@ jobs:
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-          add=`git diff --diff-filter=M ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
-          del=`git diff --name-only --diff-filter=D ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
-          if [ -n "$add" ] || [ -n "$del" ]; then
-            report="
-            今回の修正で
-            ${add}
-            が追加され、
-            ${del}
-            が削除されました。
-            "
-            echo $report | tr ' ' '\n'
-          fi
+          diff=`git diff --diff-filter=M ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
+          report="
+          今回の修正で
+          ${diff}
+          が変更されました。
+          "
+          echo $report | tr ' ' '\n'
