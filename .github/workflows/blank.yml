@@ -35,4 +35,4 @@ jobs:
           ${diff}
           が変更されました。
           "
-          echo $report | tr ' ' '\n'
+          echo $report 
