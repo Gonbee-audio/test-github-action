@@ -32,7 +32,6 @@ jobs:
           add=`git diff --diff-filter=M ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
           del=`git diff --name-only --diff-filter=D ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
           if [ -n "$add" ] || [ -n "$del" ]; then
-
             report="
             今回の修正で
             ${add}
@@ -40,6 +39,5 @@ jobs:
             ${del}
             が削除されました。
             "
-            
             echo $report | tr ' ' '\n'
           fi
