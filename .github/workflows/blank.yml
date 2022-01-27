@@ -36,5 +36,7 @@ jobs:
           diff="${diff//$'\r'/'%0D'}" 
           echo "::set-output name=diff::$diff"
       - name: res
+        env:
+          ENV_TEST: "${{ steps.test_id.outputs.diff }}"
         run: |
-          echo ${{ steps.test_id.outputs.diff }}
+          echo $ENV_TEST
