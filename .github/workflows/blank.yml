@@ -35,5 +35,4 @@ jobs:
           diff="${diff//$'\n'/'%0A'}"
           diff="${diff//$'\r'/'%0D'}" 
           echo "::set-output name=diff::$diff"
-      - run: |
           echo "${{ steps.test_id.outputs.diff }}"
