@@ -29,7 +29,7 @@ jobs:
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-          diff=`git diff --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
+          diff=`git diff -w --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
           report="
           今回の修正で
           ${diff}
