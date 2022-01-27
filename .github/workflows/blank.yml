@@ -33,9 +33,4 @@ jobs:
           diff="${diff//'%'/'%25'}"
           diff="${diff//$'\n'/'%0A'}"
           diff="${diff//$'\r'/'%0D'}" 
-          report="
-          今回の修正で
-          ${diff}
-          が変更されました。
-          "
-          echo $report
+          echo $diff
