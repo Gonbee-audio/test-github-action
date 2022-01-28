@@ -37,5 +37,5 @@ jobs:
             が追加され、
             ${del}
             が削除されました。"
-            python send_slack.py --message $report | tr ' ' '\n'
+            echo $report | tr ' ' '\n'
           fi
