@@ -39,5 +39,5 @@ jobs:
       - name: res
         run: |
           echo "${{ steps.test_id.outputs.diff }}"
-          $report="${{ steps.test_id.outputs.diff }}"
-          echo $report
+
+
