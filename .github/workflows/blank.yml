@@ -38,3 +38,4 @@ jobs:
       - name: res
         run: |
           $report="これをテストします${{ steps.test_id.outputs.diff }}テスト"
+          echo $report
