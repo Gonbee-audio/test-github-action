@@ -38,6 +38,5 @@ jobs:
           echo "::set-output name=diff::$diff"
       - name: res
         run: |
-          echo "${{ steps.test_id.outputs.diff }}"
-
-
+          $report=`${{ steps.test_id.outputs.diff }}テスト`
+          echo $report
