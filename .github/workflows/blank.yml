@@ -25,21 +25,17 @@ jobs:
           fetch-depth: 0 
       - name: Install dependencies
         run: pip install slackweb
-      - id: create_message
-        name: js diff check
+      - name: js diff check
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-          diff=`git diff --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
-          echo "::set-output name=diff::$diff"
-          message="・libディレクトリに変更がありました
-          ${diff}"
-          message="${message//'%'/'%25'}"
-          message="${message//$'\n'/'%0A'}"
-          message="${message//$'\r'/'%0D'}" 
-          echo "::set-output name=message::$message"
-      - name: to slack
-        run: | 
-          if [ -n "${{ steps.create_message.outputs.diff }}" ]; then
-            python send_slack.py --message ${{ steps.create_message.outputs.message }}
+          add=`git diff --name-only --diff-filter=A ${BEFORE_SHA}..${AFTER_SHA} -- oui/stories/**`
+          del=`git diff --name-only --diff-filter=D ${BEFORE_SHA}..${AFTER_SHA} -- oui/stories/**`
+          if [ -n "$add" ] || [ -n "$del" ]; then
+            report="storybookに
+            ${add}
+            が追加され、
+            ${del}
+            が削除されました。"
+            python send_slack.py --message $report | tr ' ' '\n'
           fi
