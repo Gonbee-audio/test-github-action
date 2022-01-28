@@ -30,11 +30,12 @@ jobs:
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-          diff=`git diff --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA}`
+          diff=`git diff --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
           diff="${diff//'%'/'%25'}"
           diff="${diff//$'\n'/'%0A'}"
           diff="${diff//$'\r'/'%0D'}" 
           echo "::set-output name=diff::$diff"
       - name: res
         run: |
-          echo "${{ steps.test_id.outputs.diff }}"
+          $report="${{ steps.test_id.outputs.diff }}"
+          echo $report
