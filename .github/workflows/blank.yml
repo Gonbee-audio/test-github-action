@@ -41,6 +41,6 @@ jobs:
           echo "::set-output name=message::$message"
       - name: res
         run: |
-          if [ -n "$diff" ]; then
+          if [ -n "${{ steps.test_id.outputs.diff }}" ]; then
             echo "${{ steps.test_id.outputs.message }}"
           fi
