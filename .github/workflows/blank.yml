@@ -16,31 +16,30 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0 
-      - id: test_id
+      - name: Install dependencies
+        run: pip install slackweb
+      - id: create_message
         name: js diff check
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
           diff=`git diff --diff-filter=MD ${BEFORE_SHA}..${AFTER_SHA} -- oui/src/lib/**`
           echo "::set-output name=diff::$diff"
-          message="・lib
+          message="・libディレクトリに変更がありました
           ${diff}"
           message="${message//'%'/'%25'}"
           message="${message//$'\n'/'%0A'}"
           message="${message//$'\r'/'%0D'}" 
           echo "::set-output name=message::$message"
-      - name: res
-        run: |
-          if [ -n "${{ steps.test_id.outputs.diff }}" ]; then
-            echo "${{ steps.test_id.outputs.message }}"
+      - name: to slack
+        run: | 
+          if [ -n "${{ steps.create_message.outputs.diff }}" ]; then
+            python send_slack.py --message ${{ steps.create_message.outputs.message }}
           fi
