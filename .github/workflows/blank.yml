@@ -29,7 +29,7 @@ jobs:
         run: |
           BEFORE_SHA=$(jq -r '.before' $GITHUB_EVENT_PATH)
           AFTER_SHA=$(jq -r '.after' $GITHUB_EVENT_PATH)
-          add=`git diff --name-only --diff-filter=A ${BEFORE_SHA}..${AFTER_SHA}`
+          add=`git diff --name-only --diff-filter=AM ${BEFORE_SHA}..${AFTER_SHA}`
           del=`git diff --name-only --diff-filter=D ${BEFORE_SHA}..${AFTER_SHA}`
           if [ -n "$add" ] || [ -n "$del" ]; then
             report="storybookに
