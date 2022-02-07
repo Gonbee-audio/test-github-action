@@ -8,10 +8,12 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
+    paths:
+      - 'src/matrixflow/db/versions/**'
   pull_request:
     branches: [ main ]
-  paths:
-    - 'src/matrixflow/db/versions/**'
+    paths:
+      - 'src/matrixflow/db/versions/**'
 
 
   # Allows you to run this workflow manually from the Actions tab
