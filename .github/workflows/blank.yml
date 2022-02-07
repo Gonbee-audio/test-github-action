@@ -9,11 +9,11 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'src/matrixflow/db/versions/**'
+      - 'oui/src/lib/**'
   pull_request:
     branches: [ main ]
     paths:
-      - 'src/matrixflow/db/versions/**'
+      - 'oui/src/lib/**'
 
 
   # Allows you to run this workflow manually from the Actions tab
